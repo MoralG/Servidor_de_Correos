@@ -54,7 +54,7 @@ sudo apt install postfix
  │                                                                     │ 
  │ System mail name:                                                   │ 
  │                                                                     │ 
- │ croqueta.amorales.gonzalonazareno.org                               │ 
+ │ amorales.gonzalonazareno.org                               │ 
  │                                                                     │ 
  │                  <Ok>                      <Cancel>                 │ 
  │                                                                     │ 
@@ -74,9 +74,9 @@ Editamos el fichero `/etc/mailname` y ponemos el nombre del correo que queremos 
 amorales.gonzalonazareno.org
 ~~~
 
->**NOTA**: He comprobado que aún cambiando el nombre en el fichero `/etc/mailname` el nombre que se muestra es el del hostname por un error de postfix.
+>**NOTA**: He comprobado que aún cambiando el nombre en el fichero `/etc/mailname` el nombre que se muestra es el del hostname por un error de postfix. Para solucionarlo tenemos que añadir en el fichero `/etc/hosts` una resolución de nombre en el localhost, `127.0.1.1       amorales.gonzalonazareno.org `.
 
-Vamos a reinicar el servicio de postfix
+Vamos a reinicar el servicio de postfix.
 ~~~
 sudo systemctl restart postfix.service
 ~~~
@@ -108,9 +108,9 @@ sudo tail /var/log/syslog
     Feb 20 17:26:55 croqueta systemd[1]: Started Postfix Mail Transport Agent (instance -).
     Feb 20 17:26:55 croqueta systemd[1]: Starting Postfix Mail Transport Agent...
     Feb 20 17:26:55 croqueta systemd[1]: Started Postfix Mail Transport Agent.
-    Feb 20 17:30:16 croqueta postfix/pickup[28307]: E594841F74: uid=1000 from=<debian@croqueta.amorales.gonzalonazareno.org>
-    Feb 20 17:30:16 croqueta postfix/cleanup[28345]: E594841F74: message-id=<20200220173016.E594841F74@croqueta.amorales.gonzalonazareno.org>
-    Feb 20 17:30:16 croqueta postfix/qmgr[28308]: E594841F74: from=<debian@croqueta.amorales.gonzalonazareno.org>, size=588, nrcpt=1 (queue active)
+    Feb 20 17:30:16 croqueta postfix/pickup[28307]: E594841F74: uid=1000 from=<debian@amorales.gonzalonazareno.org>
+    Feb 20 17:30:16 croqueta postfix/cleanup[28345]: E594841F74: message-id=<20200220173016.E594841F74@amorales.gonzalonazareno.org>
+    Feb 20 17:30:16 croqueta postfix/qmgr[28308]: E594841F74: from=<debian@amorales.gonzalonazareno.org>, size=588, nrcpt=1 (queue active)
     Feb 20 17:30:17 croqueta postfix/smtp[28347]: E594841F74: to=<ale95mogra@gmail.com>, relay=babuino-smtp.gonzalonazareno.org[192.168.203.3]:25, delay=0.11, delays=0.05/0.03/0.01/0.02, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as A83911BBFF)
 ~~~
 
@@ -150,7 +150,7 @@ mail
     Date: Thu, 20 Feb 2020 18:47:46 +0100
     Message-ID: <CANRnTqxtwRzjxEb2LDiyURjXTgwZ=bCCk1yP+HXRzniYJd4akA@mail.gmail.com>
     Subject: Prueba desde fuera
-    To: Debian <debian@croqueta.amorales.gonzalonazareno.org>
+    To: Debian <debian@amorales.gonzalonazareno.org>
     Content-Type: multipart/alternative; boundary="00000000000056ea38059f058177"
 
     --00000000000056ea38059f058177
@@ -163,7 +163,7 @@ mail
 Comprobamos los log
 ~~~
 sudo tail /var/log/syslog
-    Feb 20 17:30:16 croqueta postfix/qmgr[28308]: E594841F74: from=<debian@croqueta.amorales.gonzalonazareno.org>, size=588, nrcpt=1 (queue active)
+    Feb 20 17:30:16 croqueta postfix/qmgr[28308]: E594841F74: from=<debian@amorales.gonzalonazareno.org>, size=588, nrcpt=1 (queue active)
     Feb 20 17:30:17 croqueta postfix/smtp[28347]: E594841F74: to=<ale95mogra@gmail.com>, relay=babuino-smtp.gonzalonazareno.org[192.168.203.3]:25, delay=0.11, delays=0.05/0.03/0.01/0.02, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as A83911BBFF)
     Feb 20 17:30:17 croqueta postfix/qmgr[28308]: E594841F74: removed
     Feb 20 17:47:39 croqueta postfix/smtpd[28531]: connect from babuino-smtp.gonzalonazareno.org[192.168.203.3]
@@ -171,7 +171,7 @@ sudo tail /var/log/syslog
     Feb 20 17:47:39 croqueta postfix/cleanup[28537]: C6D3741F73: message-id=<CANRnTqxtwRzjxEb2LDiyURjXTgwZ=bCCk1yP+HXRzniYJd4akA@mail.gmail.com>
     Feb 20 17:47:39 croqueta postfix/qmgr[28308]: C6D3741F73: from=<ale95mogra@gmail.com>, size=3592, nrcpt=1 (queue active)
     Feb 20 17:47:39 croqueta postfix/smtpd[28531]: disconnect from babuino-smtp.gonzalonazareno.org[192.168.203.3] ehlo=1 mail=1 rcpt=1 data=1 quit=1 commands=5
-    Feb 20 17:47:39 croqueta postfix/local[28538]: C6D3741F73: to=<debian@croqueta.amorales.gonzalonazareno.org>, relay=local, delay=0.06, delays=0.03/0.01/0/0.01, dsn=2.0.0, status=sent (delivered to mailbox)
+    Feb 20 17:47:39 croqueta postfix/local[28538]: C6D3741F73: to=<debian@amorales.gonzalonazareno.org>, relay=local, delay=0.06, delays=0.03/0.01/0/0.01, dsn=2.0.0, status=sent (delivered to mailbox)
     Feb 20 17:47:39 croqueta postfix/qmgr[28308]: C6D3741F73: removed
 ~~~
 
